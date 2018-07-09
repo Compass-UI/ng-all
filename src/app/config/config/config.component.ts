@@ -10,6 +10,7 @@ export class ConfigComponent implements OnInit {
 
   config: Config
   headers
+  error
 
   constructor(private configService: ConfigService) { }
 
@@ -24,15 +25,17 @@ export class ConfigComponent implements OnInit {
   showConfig() {
     this.configService.getConfig()
       .subscribe((data: Config) => this.config = { /**
-       * Type-checking the response
-       * https://angular.io/guide/http
-       * The HttpClient.get() method parsed the JSON server response into the anonymous Object type. It doesn't know what the shape of that object is.
-       * You can tell HttpClient the type of the response to make consuming the output easier and more obvious.
-       */...data // The callback in the updated component method receives a typed data object, which is easier and safer to consume:
+        * Type-checking the response
+        * https://angular.io/guide/http
+        * The HttpClient.get() method parsed the JSON server response into the anonymous Object type. It doesn't know what the shape of that object is.
+        * You can tell HttpClient the type of the response to make consuming the output easier and more obvious.
+        */...data // The callback in the updated component method receives a typed data object, which is easier and safer to consume:
 
-          // countryUrl: data['countryUrl'],
-          // textfile:  data['textfile']
-      });
+            // countryUrl: data['countryUrl'],
+            // textfile:  data['textfile']
+        },
+        error => this.error = error // error path
+    );
   }
   showConfigResponse(){
     this.configService.getConfigResponse()
