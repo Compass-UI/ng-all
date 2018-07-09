@@ -17,9 +17,13 @@ export class ConfigComponent implements OnInit {
 
   ngOnInit() {
     console.log('showConfigResponse:')
-    this.showConfigResponse()
-    console.log(this.headers);
-    console.log(this.config);
+    try {
+      this.showConfigResponse()
+      console.log(this.headers);
+      console.log(this.config);
+    } catch(e){
+      console.log(e)
+    }
 
   }
 
@@ -38,6 +42,7 @@ export class ConfigComponent implements OnInit {
         (error: HttpErrorResponse) => { 
           this.error = error; // error path
           console.log(error.statusText);
+          this.error = this.configService.error;
         }
     );
   }
