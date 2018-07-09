@@ -1,3 +1,3 @@
-<p>
-  config works!
-</p>
+config: {{config | json}}
+headers: {{headers | json}}
+<span *ngIf="error">error: {{error}}</span>
