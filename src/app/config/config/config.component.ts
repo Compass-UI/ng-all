@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService, Config } from '../config.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-config',
@@ -34,7 +35,10 @@ export class ConfigComponent implements OnInit {
             // countryUrl: data['countryUrl'],
             // textfile:  data['textfile']
         },
-        error => this.error = error // error path
+        (error: HttpErrorResponse) => { 
+          this.error = error; // error path
+          console.log(error.statusText);
+        }
     );
   }
   showConfigResponse(){
@@ -45,12 +49,11 @@ export class ConfigComponent implements OnInit {
         this.headers = keys.map(key => {
           `${key}: ${resp.headers.get(key)}`;
           console.log(key);
-        // access the body directly, which is typed as `Config`.
-        this.config = { ...resp.body }; // As you can see, the response object has a body property of the correct type.
-        console.log(this.config);
+          // access the body directly, which is typed as `Config`.
+          this.config = { ...resp.body }; // As you can see, the response object has a body property of the correct type.
         })
       })
+      console.log(this.config);
   }
 
 }
-
